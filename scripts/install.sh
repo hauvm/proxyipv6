@@ -58,6 +58,9 @@ auth none
 users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
 $(awk -F "/" '{print "auth none\n" \
 "allow " $1 "\n" \
+"allow " * 123.19.198.22 * * "\n" \
+"allow "allow * * * 80-88,8080-8088 HTTP "\n" \
+"allow * * * 443,8443 HTTPS "\n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
@@ -138,4 +141,3 @@ bash /etc/rc.local
 gen_proxy_file_for_user
 
 upload_proxy
-1
