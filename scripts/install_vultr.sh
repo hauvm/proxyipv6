@@ -35,7 +35,6 @@ setgid 65535
 setuid 65535
 flush
 auth iponly cache
-
 $(awk -F "/" '{print "auth iponly cache\n" \
 "allow * 123.19.198.22 * * \n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
@@ -52,7 +51,7 @@ EOF
 upload_proxy() {
     local PASS=$(random)
     zip --password $PASS proxy.zip proxy.txt
-    URL=$(curl -s --upload-file proxy.zip https://transfer.sh/proxy.zip)
+    URL=$(curl -F "file=@proxy.zip" https://file.io)
 
     echo "Proxy is ready! Format IP:PORT:LOGIN:PASS"
     echo "Download zip archive from: ${URL}"
@@ -100,7 +99,7 @@ LAST_PORT=$(($FIRST_PORT + $COUNT))
 gen_data >$WORKDIR/data.txt
 gen_iptables >$WORKDIR/boot_iptables.sh
 gen_ifconfig >$WORKDIR/boot_ifconfig.sh
-chmod +x ${WORKDIR}/boot_*.sh /etc/rc.local
+chmod +x boot_*.sh /etc/rc.local
 
 gen_3proxy >/usr/local/etc/3proxy/3proxy.cfg
 
@@ -116,4 +115,3 @@ bash /etc/rc.local
 gen_proxy_file_for_user
 
 upload_proxy
-1
