@@ -54,11 +54,11 @@ setgid 65535
 setuid 65535
 stacksize 6291456 
 flush
-auth iponly cache
-allow * 14.250.222.33 * *
+auth none
+allow *
 
-$(awk -F "/" '{print "auth iponly cache\n" \
-"allow * 14.250.222.33 * * \n" \
+$(awk -F "/" '{print "auth none\n" \
+"allow * \n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
@@ -115,7 +115,7 @@ echo "Internal ip = ${IP4}. Exteranl sub for ip6 = ${IP6}"
 
 echo "How many proxy do you want to create? Example 500"	
 read COUNT	
-FIRST_PORT=10000	
+FIRST_PORT=100000
 LAST_PORT=$(($FIRST_PORT + $COUNT))
 
 gen_data >$WORKDIR/data.txt
@@ -139,4 +139,3 @@ bash /etc/rc.local
 gen_proxy_file_for_user
 
 upload_proxy
-1
