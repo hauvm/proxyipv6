@@ -54,10 +54,10 @@ setgid 65535
 setuid 65535
 stacksize 6291456 
 flush
-auth iponly strong
+auth inone
 users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
-$(awk -F "/" '{print "auth iponly strong\n" \
-"allow " $1 " 123.19.198.22 80-88,8080-8088,443,8443 HTTP,HTTPS \n" \
+$(awk -F "/" '{print "auth none\n" \
+"allow " $1 "\n" \
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
