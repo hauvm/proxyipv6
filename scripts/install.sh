@@ -54,11 +54,10 @@ setgid 65535
 setuid 65535
 stacksize 6291456 
 flush
-auth none
+auth iponly
+"allow * 123.19.198.22 \n" \
 
-users $(awk -F "/" 'BEGIN{ORS="";} {print $1 ":CL:" $2 " "}' ${WORKDATA})
-
-$(awk -F "/" '{print "auth none\n" \
+$(awk -F "/" '{print
 "proxy -6 -n -a -p" $4 " -i" $3 " -e"$5"\n" \
 "flush\n"}' ${WORKDATA})
 EOF
